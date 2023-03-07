@@ -47,4 +47,12 @@ function setUpProgram(program){
   gl.bindVertexArray(vao);
   gl.enableVertexAttribArray(positionAttributeLocation);
   gl.vertexAttribPointer(positionAttributeLocation,2,gl.FLOAT,false,0,0);
+  gl.viewPort(0,0,600,600);
+  gl.clearColor(0,0,0,0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.useProgram(program);
+  gl.bindVertexArray(vao);
+  return function(){
+    gl.drawArrays(gl.TRIANGLES,0,6);
+  }
 }
