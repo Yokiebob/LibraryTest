@@ -6,27 +6,29 @@ if(!gl){
   console.log('You need webgl2 for this to work!');
   debug('you need webgl2 for this to work!');
 }
-var vsh = 
-`#version 300 es
 
+function createProgram(fsh){
+    var vsh = 
+`#version 300 es
+precision lowp float;
 in vec2 pos;
 
 void main(){
-  gl_Position = pos;
+  gl_Position = vec4(pos,0,1);
 }`;
-function createProgram(fsh){
   var vertexShader = gl.createShader(gl.VERTEX_SHADER);
   gl.shaderSource(vertexShader,vsh);
   gl.compileShader(vertexShader);
-  
+
   var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
   gl.shaderSource(fragmentShader,fsh);
   gl.compileShader(fragmentShader);
-  
+
   var program = gl.createProgram();
   gl.attachShader(program,vertexShader);
   gl.attachShader(program,fragmentShader);
   gl.linkProgram(program);
+
   return program;
 }
 function setUpProgram(program){
@@ -37,7 +39,7 @@ function setUpProgram(program){
     1,1,
     -1,1,
     1,-1,
-    
+
     -1,1,
     1,-1,
     -1,-1
@@ -47,7 +49,7 @@ function setUpProgram(program){
   gl.bindVertexArray(vao);
   gl.enableVertexAttribArray(positionAttributeLocation);
   gl.vertexAttribPointer(positionAttributeLocation,2,gl.FLOAT,false,0,0);
-  gl.viewPort(0,0,600,600);
+  gl.viewport(0,0,600,600);
   gl.clearColor(0,0,0,0);
   gl.clear(gl.COLOR_BUFFER_BIT);
   gl.useProgram(program);
